@@ -1,0 +1,23 @@
+<div class="democracy-poll-section">
+    {% if form %}
+        <form method="post">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            {{ form.non_field_errors }}
+            {% csrf_token %}
+            <ul>
+            {% for choice in form.choices %}
+                <li>{{ choice }}</li>
+            {% endfor %}
+            </ul>
+            <button type="submit">Submit</button>
+        </form>
+    {% elif results %}
+        <ul>
+            {% for choice, votes in results %}
+            <li>{{ choice }}: {{ votes }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
