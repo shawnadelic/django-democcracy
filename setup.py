@@ -87,7 +87,7 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'dev': ['check-manifest'],
-        'test': ['flake8', 'isort'],
+        'test': ['flake8', 'isort', 'pytest', 'pytest-django'],
     },
 
     # If there are data files included in your packages that need to be
