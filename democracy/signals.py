@@ -10,15 +10,21 @@ from .models import (
 @receiver(post_save)
 def create_poll_choice(sender, instance, created, **kwargs):
     if not isinstance(instance, PollChoiceModelMixin) and created:
-        pass
-        # Create a poll choice
-
-
-@receiver(post_delete)
-def delete_poll_choice(sender, instance, **kwargs):
-    if not isinstance(instance, PollChoiceModelMixin):
         return
-    # Delete a poll choice
+    if created:
+        choice_content_type = ContentType.objects.get_for_model(sender)
+        poll_content_type = ContentType.objects.get_for_model(instance.poll)
+        PollChoiceBase.objects.create(
+            poll=poll_content_type,
+            content_type=content_type, object_id=instance.id
+        )
+
+
+#@receiver(post_delete)
+#def delete_poll_choice(sender, instance, **kwargs):
+#    if not isinstance(instance, PollChoiceModelMixin):
+#        return
+#    # Delete a poll choice
 
 
 @receiver(post_save)
@@ -26,9 +32,9 @@ def create_poll(sender, instance, created, **kwargs):
     if not isinstance(instance, PollModelMixin):
         return
     if created:
-        content_type = ContentType.objects.get_for_model(sender)
+        poll_content_type = ContentType.objects.get_for_model(sender)
         PollBase.objects.create(
-            content_type=content_type, object_id=instance.id
+            content_type=poll_content_type, object_id=instance.id
         )
         # Create a poll
     else:
