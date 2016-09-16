@@ -6,6 +6,7 @@ dist/
 __pycache__/
 *.so
 *.swp
+*.sqlite3
 *~
 
 .tox
